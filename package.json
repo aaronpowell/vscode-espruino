@@ -1,0 +1,39 @@
+{
+    "name": "vscode-espruino",
+    "displayName": "Espruino for VSCode",
+    "description": "A VSCode plugin for working with Espruino micro controllers",
+    "version": "0.1.0",
+    "publisher": "Aaron Powell",
+    "engines": {
+        "vscode": "^0.10.1"
+    },
+    "categories": [
+        "Other"
+    ],
+    "activationEvents": [
+        "onCommand:VSCEspruino.listPorts"
+    ],
+    "main": "./out/src/extension",
+    "contributes": {
+        "commands": [
+            {
+                "command": "VSCEspruino.listPorts",
+                "title": "Espruino: List Ports"
+            }
+        ]
+    },
+    "scripts": {
+        "vscode:prepublish": "node ./node_modules/vscode/bin/compile",
+        "compile": "node ./node_modules/vscode/bin/compile -watch -p ./",
+        "install": "node ./node_modules/electron-rebuild/lib/cli.js --version 0.34.1"
+    },
+    "devDependencies": {
+        "typescript": "^1.6.2",
+        "vscode": "0.10.x",
+        "electron-rebuild": "^1.0.2",
+        "electron-prebuilt": "0.34.1"
+    },
+    "dependencies": {
+        "serialport": "^2.0.5"
+    }
+}
