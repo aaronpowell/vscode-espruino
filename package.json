@@ -11,7 +11,7 @@
         "Other"
     ],
     "activationEvents": [
-        "onCommand:VSCEspruino.listPorts"
+        "*"
     ],
     "main": "./out/src/extension",
     "contributes": {
@@ -19,6 +19,10 @@
             {
                 "command": "VSCEspruino.listPorts",
                 "title": "Espruino: List Ports"
+            },
+            {
+                "command": "VSCEspruino.connect-disconnect",
+                "title": "Espruino: Connect/Disconnect"
             }
         ]
     },
