@@ -19,6 +19,12 @@ export default {
         return new Promise((resolve, reject) => {
             connection = new serialport.SerialPort(port, { baudrate });
 
+            connection.on('data', data => {
+               if (data) {
+                   output.appendLine(data);
+               }
+            });
+
             connection.on('open', (err, data) => {
                 if (err) {
                     reject(err);
