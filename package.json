@@ -23,6 +23,10 @@
             {
                 "command": "VSCEspruino.connect-disconnect",
                 "title": "Espruino: Connect/Disconnect"
+            },
+            {
+                "command": "VSCEspruino.run-file",
+                "title": "Espruino: Run current file"
             }
         ]
     },

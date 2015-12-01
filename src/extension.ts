@@ -47,6 +47,12 @@ export function activate(context: ExtensionContext) {
     });
     context.subscriptions.push(disposable);
 
+    disposable = commands.registerCommand('VSCEspruino.run-file', () => {
+       var text = window.activeTextEditor.document.getText();
+
+       connectionManager.run(text);
+    });
+
     var connectionStatus = window.createStatusBarItem(StatusBarAlignment.Right);
     connectionStatus.text = 'Disconnected';
     connectionStatus.show();

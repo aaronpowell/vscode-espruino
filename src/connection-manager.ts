@@ -52,5 +52,18 @@ export default {
                 }));
             });
         });
+    },
+
+    run(text: string) {
+        output.appendLine('Sending...');
+        connection.write(text, err => {
+            if (err) {
+                output.appendLine('Error:');
+                output.appendLine(err);
+                return;
+            }
+
+            connection.drain(() => output.appendLine('Sent...'));
+        });
     }
 };
