@@ -1,5 +1,5 @@
-import { window, ViewColumn } from 'vscode';
-import { SerialPort } from 'serialport';
+import { window, ViewColumn, QuickPickItem } from 'vscode';
+import * as serialport from 'serialport';
 
 let connected = false;
 let connection;
@@ -17,7 +17,7 @@ export default {
 
     connect(port: string, baudrate: number) {
         return new Promise((resolve, reject) => {
-            connection = new SerialPort(port, { baudrate });
+            connection = new serialport.SerialPort(port, { baudrate });
 
             connection.on('open', (err, data) => {
                 if (err) {
@@ -36,5 +36,21 @@ export default {
 
     isConnected() {
         return connected;
+    },
+
+    getPorts() {
+        return new Promise<QuickPickItem[]>((resolve, reject) => {
+            serialport.list((err, ports) => {
+               if (err) {
+                   return reject(err);
+               }
+                resolve(ports.map(p => {
+                    return {
+                        label: p.comName,
+                        description: `${p.comName} (${p.manufacturer})`
+                    } as QuickPickItem;
+                }));
+            });
+        });
     }
 };
