@@ -3,7 +3,7 @@
     "displayName": "Espruino for VSCode",
     "description": "A VSCode plugin for working with Espruino micro controllers",
     "version": "0.1.0",
-    "publisher": "Aaron Powell",
+    "publisher": "aaronpowell",
     "engines": {
         "vscode": "^0.10.1"
     },
@@ -43,5 +43,12 @@
     },
     "dependencies": {
         "serialport": "^2.0.5"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/aaronpowell/vscode-espruino.git"
+    },
+    "bugs": {
+        "url": "https://github.com/aaronpowell/vscode-espruino/issues"
     }
 }

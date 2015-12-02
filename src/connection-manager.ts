@@ -2,7 +2,7 @@ import { window, ViewColumn, QuickPickItem } from 'vscode';
 import * as serialport from 'serialport';
 
 let connected = false;
-let connection;
+let connection: serialport.SerialPortInstance;
 var output = window.createOutputChannel('Espruino');
 
 export default {
@@ -46,9 +46,10 @@ export default {
 
     getPorts() {
         return new Promise<QuickPickItem[]>((resolve, reject) => {
-            serialport.list((err, ports) => {
+            serialport.list((err: string, ports: serialport.Port[]) => {
                if (err) {
-                   return reject(err);
+                   reject(err);
+                   return;
                }
                 resolve(ports.map(p => {
                     return {
