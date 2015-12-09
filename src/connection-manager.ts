@@ -1,61 +1,38 @@
 import { window, ViewColumn, QuickPickItem } from 'vscode';
-import * as serialport from 'serialport';
 
-let connected = false;
-let connection: serialport.SerialPortInstance;
 var output = window.createOutputChannel('Espruino');
 
 export default {
     disconnect() {
-        return new Promise((resolve, reject) => {
-            connection.close(() => {
-                connected = false;
-                resolve();
-            });
-        });
+        Espruino.Core.Serial.close();
     },
 
     connect(port: string, baudrate: number) {
         return new Promise((resolve, reject) => {
-            connection = new serialport.SerialPort(port, { baudrate });
+            let { Serial } = Espruino.Core;
 
-            connection.on('data', data => {
-               if (data) {
-                   output.appendLine(data);
-               }
+            Serial.startListening(data => {
+                console.log(data);
             });
 
-            connection.on('open', (err, data) => {
-                if (err) {
-                    reject(err);
-                }
-                output.show(ViewColumn.Two);
-                output.appendLine(`Connection established to ${port}`);
-                if (data) {
-                    output.appendLine(data);
-                }
-                resolve();
+            Espruino.Config.BAUD_RATE = baudrate;
+
+            Serial.open(port, status => {
+                console.log('Connected: ', status);
+                resolve(status);
             });
-            connected = true;
         });
     },
 
     isConnected() {
-        return connected;
+        return Espruino.Core.Serial.isConnected();
     },
 
     getPorts() {
         return new Promise<QuickPickItem[]>((resolve, reject) => {
-            serialport.list((err: string, ports: serialport.Port[]) => {
-               if (err) {
-                   reject(err);
-                   return;
-               }
+            Espruino.Core.Serial.getPorts((ports: string[]) => {
                 resolve(ports.map(p => {
-                    return {
-                        label: p.comName,
-                        description: `${p.comName} (${p.manufacturer})`
-                    } as QuickPickItem;
+                    return { label: p, description: p };
                 }));
             });
         });
@@ -63,14 +40,12 @@ export default {
 
     run(text: string) {
         output.appendLine('Sending...');
-        connection.write(text, err => {
-            if (err) {
-                output.appendLine('Error:');
-                output.appendLine(err);
-                return;
-            }
-
-            connection.drain(() => output.appendLine('Sent...'));
+        return new Promise((resolve, reject) => {
+           Espruino.callProcessor(
+               'transformForEspruino',
+                text,
+                code => Espruino.Core.CodeWriter.writeToEspruino(code, () => resolve())
+            );
         });
     }
 };
