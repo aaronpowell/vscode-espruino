@@ -28,6 +28,12 @@
                 "command": "VSCEspruino.run-file",
                 "title": "Espruino: Run current file"
             }
+        ],
+        "jsonValidation": [
+            {
+                "fileMatch": "espruino.json",
+                "url": "./schemas/espruino.schema.json"
+            }
         ]
     },
     "scripts": {
