@@ -5,9 +5,9 @@ import * as espruino from 'espruino';
 
 export function activate(context: ExtensionContext) {
     var connectionStatus = window.createStatusBarItem(StatusBarAlignment.Right);
-    espruino.init(() => {
+    espruino.init(async () => {
         console.log('Congratulations, your extension "vscode-espruino" is now active!');
-        var disposable = commands.registerCommand('VSCEspruino.listPorts', () => {
+        var disposable = commands.registerCommand('VSCEspruino.listPorts', async () => {
             var opts: QuickPickOptions = {
                 matchOnDescription: true,
                 placeHolder: 'Select a port to connect to'
@@ -15,33 +15,35 @@ export function activate(context: ExtensionContext) {
 
             var promise = connectionManager.getPorts();
 
-            window.showQuickPick(promise, opts)
-                .then(selection => settingsManager.setPort(selection.label))
-                .then(settings => connectionStatus.text = `${connectionManager.isConnected() ? 'Connected' : 'Disconnected' }: ${settings.port}`);
+            var selection = await window.showQuickPick(promise, opts);
+            var settings = await settingsManager.setPort(selection.label);
+            connectionStatus.text = `${connectionManager.isConnected() ? 'Connected' : 'Disconnected'}: ${settings.port}`;
         });
         context.subscriptions.push(disposable);
 
-        disposable = commands.registerCommand('VSCEspruino.connect-disconnect', () => {
-            settingsManager.getSettings()
-                .then(settings =>
-                    window.showQuickPick(['Yes', 'No'], { matchOnDescription: true, placeHolder: `${connectionManager.isConnected() ? 'Disconnect' : 'Connect'} port ${settings.port}` })
-                        .then(selection => {
-                            return { settings, selection };
-                        })
-                )
-                .then(({ settings, selection }) => {
-                    if (selection === 'No') {
-                        return;
-                    }
+        disposable = commands.registerCommand('VSCEspruino.connect-disconnect', async () => {
+            var settings = await settingsManager.getSettings();
 
-                    if (connectionManager.isConnected()) {
-                        connectionManager.disconnect();
-                        connectionStatus.text = `Disconnected: ${settings.port}`;
-                    } else {
-                        connectionManager.connect(settings.port, settings.baudrate)
-                            .then(() => connectionStatus.text = `Connected: ${settings.port}`);
-                    }
-                });
+            var opts = {
+                matchOnDescription: true,
+                placeHolder: `${connectionManager.isConnected() ? 'Disconnect' : 'Connect'} port ${settings.port}`
+            };
+            var selection = await window.showQuickPick(
+                ['Yes', 'No'],
+                opts
+            );
+
+            if (selection === 'No') {
+                return;
+            }
+
+            if (connectionManager.isConnected()) {
+                connectionManager.disconnect();
+                connectionStatus.text = `Disconnected: ${settings.port}`;
+            } else {
+                await connectionManager.connect(settings.port, settings.baudrate);
+                connectionStatus.text = `Connected: ${settings.port}`;
+            }
         });
         context.subscriptions.push(disposable);
 
@@ -56,10 +58,8 @@ export function activate(context: ExtensionContext) {
             connectionManager.run(text);
         });
 
-        settingsManager.getSettings()
-            .then(settings => {
-                connectionStatus.text = `Disconnected: ${settings.port || 'No port'}`;
-                connectionStatus.show();
-            });
+        var settings = await settingsManager.getSettings();
+        connectionStatus.text = `Disconnected: ${settings.port || 'No port'}`;
+        connectionStatus.show();
     });
 };
