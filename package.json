@@ -39,10 +39,10 @@
     "scripts": {
         "vscode:prepublish": "node ./node_modules/vscode/bin/compile",
         "compile": "node ./node_modules/vscode/bin/compile -watch -p ./",
-        "install": "node ./node_modules/electron-rebuild/lib/cli.js --version 0.34.1"
+        "rebuild:native-modules": "node ./node_modules/electron-rebuild/lib/cli.js --version 0.34.1"
     },
     "devDependencies": {
-        "typescript": "^1.6.2",
+        "typescript": "^1.7.5",
         "vscode": "0.10.x",
         "electron-prebuilt": "0.34.1",
         "electron-rebuild": "^1.0.2"
