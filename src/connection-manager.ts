@@ -13,7 +13,17 @@ export default {
             let Serial = Espruino.Core.Serial;
 
             Serial.startListening(data => {
-                console.log(data);
+                let parsedData = '';
+
+                if (data.constructor === ArrayBuffer) {
+                    var bufView = new Uint8Array(data as ArrayBuffer);
+                    var encodedString = String.fromCharCode.apply(null, bufView);
+                    parsedData = decodeURIComponent(encodedString);
+
+                } else {
+                    parsedData = data as string;
+                }
+                console.log(parsedData);
             });
 
             Espruino.Config.BAUD_RATE = baudrate;
@@ -21,6 +31,9 @@ export default {
             Serial.open(port, status => {
                 console.log('Connected: ', status);
                 resolve(status);
+            },
+            () => {
+                console.log('Disconnected');
             });
         });
     },

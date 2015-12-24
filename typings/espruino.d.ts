@@ -19,13 +19,13 @@ interface Config {
 interface Serial {
     close: () => void
 
-    open: (port: string, fn: ((status: string) => void)) => void
+    open: (port: string, onConnect: ((status: string) => void), onDisconnect: () => void) => void
 
     isConnected: () => boolean
 
     getPorts: (fn: (ports: string[]) => void) => void
 
-    startListening:(fn: (data: string) => void) => void
+    startListening:(fn: (data: string | ArrayBuffer) => void) => void
 }
 
 interface CodeWriter {
