@@ -27,7 +27,7 @@ export function activate(context: ExtensionContext) {
 
             var opts = {
                 matchOnDescription: true,
-                placeHolder: `${connectionManager.isConnected() ? 'Disconnect' : 'Connect'} port ${settings.port}`
+                placeHolder: `${connectionManager.isConnected() ? 'Disconnected' : 'Connected'}: port ${settings.port}`
             };
             var selection = await window.showQuickPick(
                 ['Yes', 'No'],
@@ -62,5 +62,9 @@ export function activate(context: ExtensionContext) {
         var settings = await settingsManager.getSettings();
         connectionStatus.text = `Disconnected: ${settings.port || 'No port'}`;
         connectionStatus.show();
+
+        settingsManager.onSettingsChange(settings => {
+            connectionStatus.text = `${!connectionManager.isConnected() ? 'Disconnected' : 'Connected'}: ${settings.port || 'No port'}`;
+        });
     });
 };

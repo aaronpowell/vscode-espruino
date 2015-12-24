@@ -12,6 +12,8 @@ interface EspruinoSettings {
 
 let settings: EspruinoSettings;
 
+let settingsChangeHandlers = [];
+
 let save = function(): Promise<EspruinoSettings> {
     if (!workspace.rootPath) {
         return Promise.resolve(settings);
@@ -87,14 +89,20 @@ workspace.onDidChangeTextDocument(e => {
 
     try {
         settings = JSON.parse(txt);
+        settingsChangeHandlers.forEach(fn => fn(settings));
     } catch (e) {
-        // file isn't complete yet, ignoring
+        console.warn(e);
     }
 });
 
+let onSettingsChange = function(fn: (e: EspruinoSettings) => void) {
+    settingsChangeHandlers.push(fn);
+};
+
 export default {
     getSettings,
-    setPort
+    setPort,
+    onSettingsChange
 };
 
 export { EspruinoSettings };
