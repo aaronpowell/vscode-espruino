@@ -23,17 +23,18 @@ export default {
                 } else {
                     parsedData = data as string;
                 }
-                console.log(parsedData);
+                output.appendLine(parsedData);
             });
 
             Espruino.Config.BAUD_RATE = baudrate;
 
             Serial.open(port, status => {
-                console.log('Connected: ', status);
+                output.show(ViewColumn.Two);
+                output.appendLine(`Connected: ${status}`)
                 resolve(status);
             },
             () => {
-                console.log('Disconnected');
+                output.appendLine('Disconnected');
             });
         });
     },
@@ -53,6 +54,7 @@ export default {
     },
 
     run(text: string) {
+        output.show(ViewColumn.Two);
         output.appendLine('Sending...');
         return new Promise((resolve, reject) => {
            Espruino.callProcessor(
