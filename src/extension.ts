@@ -1,3 +1,4 @@
+'use strict';
 import { ExtensionContext, QuickPickItem, QuickPickOptions, StatusBarAlignment, window, commands, workspace } from 'vscode';
 import connectionManager from './connection-manager';
 import settingsManager from './settings';

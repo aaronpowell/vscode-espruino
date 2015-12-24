@@ -1,3 +1,4 @@
+'use strict';
 import { window, ViewColumn, QuickPickItem } from 'vscode';
 
 var output = window.createOutputChannel('Espruino');
@@ -9,7 +10,7 @@ export default {
 
     connect(port: string, baudrate: number) {
         return new Promise((resolve, reject) => {
-            let { Serial } = Espruino.Core;
+            let Serial = Espruino.Core.Serial;
 
             Serial.startListening(data => {
                 console.log(data);
