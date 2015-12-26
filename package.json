@@ -27,6 +27,10 @@
             {
                 "command": "VSCEspruino.run-file",
                 "title": "Espruino: Run current file"
+            },
+            {
+                "command": "VSCEspruino.reset",
+                "title": "Espruino: Reset device"
             }
         ],
         "jsonValidation": [

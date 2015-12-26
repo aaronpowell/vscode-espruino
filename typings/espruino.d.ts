@@ -26,6 +26,8 @@ interface Serial {
     getPorts: (fn: (ports: string[]) => void) => void
 
     startListening:(fn: (data: string | ArrayBuffer) => void) => void
+
+    write: (code: string, callback: () => void) => void
 }
 
 interface CodeWriter {

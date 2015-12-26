@@ -58,6 +58,16 @@ export function activate(context: ExtensionContext) {
 
             connectionManager.run(text);
         });
+        context.subscriptions.push(disposable);
+
+        context.subscriptions.push(commands.registerCommand('VSCEspruino.reset', () => {
+            if (!connectionManager.isConnected()) {
+                window.showErrorMessage('You must connect before resetting');
+                return;
+            }
+
+            connectionManager.reset();
+        }));
 
         var settings = await settingsManager.getSettings();
         connectionStatus.text = `Disconnected: ${settings.port || 'No port'}`;
