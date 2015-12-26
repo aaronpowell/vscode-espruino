@@ -8,6 +8,7 @@ const filename = 'espruino.json';
 interface EspruinoSettings {
     port?: string
     baudrate: number
+    autoConnect: boolean
 }
 
 let settings: EspruinoSettings;
@@ -36,7 +37,8 @@ let getSettings = function() {
     if (!workspace.rootPath) {
         if (!settings) {
             settings = {
-                baudrate: 115200
+                baudrate: 115200,
+                autoConnect: false
             };
         }
 
@@ -49,7 +51,8 @@ let getSettings = function() {
         fs.exists(configLocation, exists => {
             if (!exists) {
                 settings = {
-                    baudrate: 115200
+                    baudrate: 115200,
+                    autoConnect: false
                 };
                 return resolve(settings);
             }

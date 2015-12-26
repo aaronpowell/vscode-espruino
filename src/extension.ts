@@ -63,6 +63,11 @@ export function activate(context: ExtensionContext) {
         connectionStatus.text = `Disconnected: ${settings.port || 'No port'}`;
         connectionStatus.show();
 
+        if (settings.autoConnect) {
+            await connectionManager.connect(settings.port, settings.baudrate);
+            connectionStatus.text = `Connected: ${settings.port}`;
+        }
+
         settingsManager.onSettingsChange(settings => {
             connectionStatus.text = `${!connectionManager.isConnected() ? 'Disconnected' : 'Connected'}: ${settings.port || 'No port'}`;
         });
