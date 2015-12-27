@@ -69,5 +69,11 @@ export default {
         return new Promise((resolve, reject) => {
            Espruino.Core.Serial.write("\x03reset();\n", () => resolve());
         });
+    },
+
+    save() {
+        return new Promise((resolve, reject) => {
+           Espruino.Core.Serial.write("\x03save();\n", () => resolve());
+        });
     }
 };

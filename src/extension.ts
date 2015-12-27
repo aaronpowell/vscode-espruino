@@ -69,6 +69,15 @@ export function activate(context: ExtensionContext) {
             connectionManager.reset();
         }));
 
+        context.subscriptions.push(commands.registerCommand('VSCEspruino.save', () => {
+            if (!connectionManager.isConnected()) {
+                window.showErrorMessage('You must connect before saving');
+                return;
+            }
+
+            connectionManager.save();
+        }))
+
         var settings = await settingsManager.getSettings();
         connectionStatus.text = `Disconnected: ${settings.port || 'No port'}`;
         connectionStatus.show();

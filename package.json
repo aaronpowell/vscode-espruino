@@ -31,6 +31,10 @@
             {
                 "command": "VSCEspruino.reset",
                 "title": "Espruino: Reset device"
+            },
+            {
+                "command": "VSCEspruino.save",
+                "title": "Espruino: Save app to memory"
             }
         ],
         "jsonValidation": [
