@@ -31,6 +31,10 @@
             {
                 "command": "VSCEspruino.reset",
                 "title": "Espruino: Reset device"
+            },
+            {
+                "command": "VSCEspruino.html-to-js",
+                "title": "Espruino: Convert HTML to JavaScript"
             }
         ],
         "jsonValidation": [

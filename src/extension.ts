@@ -2,6 +2,7 @@
 import { ExtensionContext, QuickPickItem, QuickPickOptions, StatusBarAlignment, window, commands, workspace } from 'vscode';
 import connectionManager from './connection-manager';
 import settingsManager from './settings';
+import fileConverter from './file-converter';
 import * as espruino from 'espruino';
 
 export function activate(context: ExtensionContext) {
@@ -68,6 +69,8 @@ export function activate(context: ExtensionContext) {
 
             connectionManager.reset();
         }));
+
+        fileConverter.setupCommands(context);
 
         var settings = await settingsManager.getSettings();
         connectionStatus.text = `Disconnected: ${settings.port || 'No port'}`;
