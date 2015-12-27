@@ -2,7 +2,7 @@
     "name": "vscode-espruino",
     "displayName": "Espruino for VSCode",
     "description": "A VSCode plugin for working with Espruino micro controllers",
-    "version": "0.1.0",
+    "version": "0.2.0",
     "publisher": "aaronpowell",
     "engines": {
         "vscode": "^0.10.1"
