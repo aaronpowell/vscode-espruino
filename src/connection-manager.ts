@@ -23,7 +23,10 @@ export default {
                 } else {
                     parsedData = data as string;
                 }
-                output.appendLine(parsedData);
+
+                if (parsedData) {
+                    output.appendLine(parsedData);
+                }
             });
 
             Espruino.Config.BAUD_RATE = baudrate;
