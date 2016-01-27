@@ -56,7 +56,8 @@
         "electron-rebuild": "^1.0.2"
     },
     "dependencies": {
-        "espruino": "0.0.13"
+        "espruino": "0.0.13",
+        "html-minifier": "^1.1.1"
     },
     "repository": {
         "type": "git",
@@ -64,5 +65,6 @@
     },
     "bugs": {
         "url": "https://github.com/aaronpowell/vscode-espruino/issues"
-    }
+    },
+    "licenseUrl": "https://github.com/aaronpowell/vscode-espruino/blob/master/LICENSE.md"
 }

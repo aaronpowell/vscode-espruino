@@ -1,10 +1,20 @@
 'use strict';
 import { commands, window, ExtensionContext, OutputChannel, ViewColumn } from 'vscode';
+import * as htmlMin from 'html-minifier';
 
 var output: OutputChannel;
 
 function htmlToJs(html: string) {
-    var obj = { html }
+    var minifiedHTML = htmlMin.minify(html, {
+        collapseWhitespace: true,
+        collapseInlineTagWhitespace: true,
+        removeComments: true,
+        removeScriptTypeAttributes: true,
+        minifyJS: true,
+        minifyCSS: true
+    });
+
+    var obj = { html: minifiedHTML };
 
     return JSON.stringify(obj);
 };
