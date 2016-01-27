@@ -8,7 +8,8 @@ const filename = 'espruino.json';
 interface EspruinoSettings {
     port?: string
     baudrate: number
-    autoConnect: boolean
+    autoConnect: boolean,
+    resetBeforeSend: boolean
 }
 
 let settings: EspruinoSettings;
@@ -38,7 +39,8 @@ let getSettings = function() {
         if (!settings) {
             settings = {
                 baudrate: 115200,
-                autoConnect: false
+                autoConnect: false,
+                resetBeforeSend: false
             };
         }
 
@@ -52,7 +54,8 @@ let getSettings = function() {
             if (!exists) {
                 settings = {
                     baudrate: 115200,
-                    autoConnect: false
+                    autoConnect: false,
+                    resetBeforeSend: false
                 };
                 return resolve(settings);
             }

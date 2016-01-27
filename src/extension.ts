@@ -49,10 +49,16 @@ export function activate(context: ExtensionContext) {
         });
         context.subscriptions.push(disposable);
 
-        disposable = commands.registerCommand('VSCEspruino.run-file', () => {
+        disposable = commands.registerCommand('VSCEspruino.run-file', async () => {
             if (!connectionManager.isConnected()) {
                 window.showErrorMessage('You must connect before running code.');
                 return;
+            }
+
+            var settings = await settingsManager.getSettings();
+
+            if (settings.resetBeforeSend) {
+                await connectionManager.reset();
             }
 
             var text = window.activeTextEditor.document.getText();

@@ -70,7 +70,10 @@ export default {
 
     reset() {
         return new Promise((resolve, reject) => {
-           Espruino.Core.Serial.write("\x03reset();\n", () => resolve());
+           Espruino.Core.Serial.write("\x03reset();\n", true, () => resolve());
+
+           // temp workaround until the callback is supported by the node module
+           setTimeout(() => resolve(), 200);
         });
     }
 };

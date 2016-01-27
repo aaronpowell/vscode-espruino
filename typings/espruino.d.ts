@@ -27,7 +27,7 @@ interface Serial {
 
     startListening:(fn: (data: string | ArrayBuffer) => void) => void
 
-    write: (code: string, callback: () => void) => void
+    write: (code: string, showStatus: boolean, callback: () => void) => void
 }
 
 interface CodeWriter {
