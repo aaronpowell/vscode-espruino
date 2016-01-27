@@ -14,5 +14,13 @@
     "baudrate": {
         "title": "The baudrate for the connection to use when connecting to the port",
         "type": "number"
+    },
+    "autoConnect": {
+        "title": "Should the specified port be connected to when VSCode activates",
+        "type": "boolean"
+    },
+    "resetBeforeSend": {
+        "title": "Reset the device before before sending the new file",
+        "type": "boolean"
     }
 }
