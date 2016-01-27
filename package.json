@@ -11,7 +11,8 @@
         "Other"
     ],
     "activationEvents": [
-        "*"
+        "workspaceContains:espruino.json",
+        "onCommand:VSCEspruino.listPorts"
     ],
     "main": "./out/src/extension",
     "contributes": {

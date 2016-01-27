@@ -92,3 +92,7 @@ export function activate(context: ExtensionContext) {
         });
     });
 };
+
+export function deactivate() {
+    console.log('deactivate');
+};
