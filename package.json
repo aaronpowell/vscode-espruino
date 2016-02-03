@@ -48,13 +48,15 @@
     "scripts": {
         "vscode:prepublish": "node ./node_modules/vscode/bin/compile",
         "compile": "node ./node_modules/vscode/bin/compile -watch -p ./",
-        "rebuild:native-modules": "node ./node_modules/electron-rebuild/lib/cli.js --version 0.34.1"
+        "rebuild:native-modules": "node ./node_modules/electron-rebuild/lib/cli.js --version 0.34.5",
+        "vsce": "./node_modules/.bin/vsce"
     },
     "devDependencies": {
         "typescript": "^1.7.5",
         "vscode": "0.10.x",
-        "electron-prebuilt": "0.34.1",
-        "electron-rebuild": "^1.0.2"
+        "electron-prebuilt": "0.34.5",
+        "electron-rebuild": "^1.0.2",
+        "vsce": "^1.1.0"
     },
     "dependencies": {
         "espruino": "0.0.13",
